@@ -3,3 +3,6 @@
 Luau++ is a compatibility layer for C++, where programmers can write Luau-like code and the main header will runs it
 There is also LocalDataSaveService, which will be explained further in the next README.txt, which is in the Luau++ folder
 Project Version: #1
+For reasons, i will be releasing newer codes, but never the completed version
+
+@Cashierob

@@ -4,6 +4,8 @@ This is a small A C++ library that lets developers write Luau-like code by provi
 familiar Luau functions and services implemented in C++.
 or just a Luau compatibility layer for C++.
 
+(Some codes are changed to match the Window environment)
+
 Version #1
 
 Before writing a project using this, remember to copy the Luau++ folder into your folder project

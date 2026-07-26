@@ -24,7 +24,7 @@ And you'll have to compile with "g++ -std=c++20 Yourfilename.cpp -o Name"
 
 Here are some working luau that works:
 print(str);
-UserInput(string&); //put your string/int here to get User input
+UserInput(); //Returns string (like cin <<)
 type(str/int); //Return corresponding variable type
 string.stringlower(str);
 string.stringupper(str);

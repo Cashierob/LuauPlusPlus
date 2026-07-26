@@ -17,8 +17,10 @@ inline void print(const auto& message) {
     std::cout << message << std::endl;
 }
 
-inline void UserInput(std::string& input) {
+std::string UserInput() {
+    std::string input;
     std::getline(std::cin, input);
+    return input;
 }
 
 std::string type(const auto& input) {

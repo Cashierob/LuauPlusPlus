@@ -34,7 +34,7 @@ namespace fs = filesystem;
 
 //compile your CPP file with "g++ -std=c++20 Yourfilename.cpp -o Name"
 
-inline void print(const auto& message) {
+inline void printl(const auto& message) {
     cout << message << endl;
 }
 
@@ -44,7 +44,7 @@ inline string UserInput() {
     return input;
 }
 
-inline string typef(const auto& input) {
+inline string typefl(const auto& input) {
     if constexpr (is_same_v<decay_t<decltype(input)>, bool>) {
         return "bool";
     } else if constexpr (is_integral_v<decay_t<decltype(input)>>) {

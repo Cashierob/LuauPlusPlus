@@ -27,7 +27,6 @@
 #include <type_traits>
 #include <chrono>
 #include <thread>
-#include <cmath>
 #include <algorithm>
 using namespace std;
 namespace fs = filesystem;
@@ -109,7 +108,7 @@ namespace mathl {
     }
 
     inline double hugel() {
-        return numeric_limits<double>::infinity();;
+        return numeric_limits<double>::infinity();
     }
 
     inline double absl(double value) {

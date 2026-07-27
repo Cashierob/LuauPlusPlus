@@ -62,9 +62,9 @@ inline string typefl(const auto& input) {
 
 namespace taskl {
     inline void waitl(double duration) {
-        if (typef(duration) == "double") {
+        if (typefl(duration) == "double") {
             this_thread::sleep_for(chrono::milliseconds((static_cast<unsigned int>(floor(duration)*1000))));
-        } else if ((typef(duration) == "int")) {
+        } else if ((typefl(duration) == "int")) {
             this_thread::sleep_for(chrono::seconds((static_cast<unsigned int>(duration))));
         }
     }

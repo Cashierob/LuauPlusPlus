@@ -42,7 +42,7 @@ mathl::randoml(min,max);
 mathl::pil();
 //Return pi.
 mathl::hugel();
-//Return 9e10 (Couldn't be infinity.)
+//Return Infinity;
 mathl::absl(value);
 //Return abs of the input value.
 

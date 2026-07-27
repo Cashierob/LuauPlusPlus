@@ -61,7 +61,7 @@ inline string typef(const auto& input) {
 }
 
 namespace taskl {
-    inline void wait(double duration) {
+    inline void waitl(double duration) {
         if (typef(duration) == "double") {
             this_thread::sleep_for(chrono::milliseconds((static_cast<unsigned int>(floor(duration)*1000))));
         } else if ((typef(duration) == "int")) {
@@ -71,7 +71,7 @@ namespace taskl {
 }
 
 namespace stringl {
-    inline string lower(const string& str) {
+    inline string lowerl(const string& str) {
         string result = str;
         for (char& c : result) {
             c = static_cast<char>(tolower(static_cast<unsigned char>(c)));
@@ -79,7 +79,7 @@ namespace stringl {
         return result;
     }
 
-    inline string upper(const string& str) {
+    inline string upperl(const string& str) {
         string result = str;
         for (char& c : result) {
             c = static_cast<char>(toupper(static_cast<unsigned char>(c)));
@@ -87,7 +87,7 @@ namespace stringl {
         return result;
     }
 
-    inline string find(const string& str, const string& substr) {
+    inline string findl(const string& str, const string& substr) {
         size_t pos = str.find(substr);
         if (pos != string::npos) {
             return to_string(pos);

@@ -109,7 +109,7 @@ namespace mathl {
     }
 
     inline double hugel() {
-        return 1e9;
+        return numeric_limits<double>::infinity();;
     }
 
     inline double absl(double value) {

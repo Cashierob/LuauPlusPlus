@@ -1,5 +1,7 @@
 Made By @cashierob Discord
 
+(A very very early project.)
+
 This is a small A C++ library that lets developers write Luau-like code by providing 
 familiar Luau functions and services implemented in C++.
 or just a Luau compatibility layer for C++.

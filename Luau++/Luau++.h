@@ -25,151 +25,193 @@
 #include <fstream>
 #include <filesystem>
 #include <type_traits>
+#include <chrono>
+#include <thread>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+namespace fs = filesystem;
 
-//compile with "g++ -std=c++20 Main.cpp -o Main.exe"
+//compile your CPP file with "g++ -std=c++20 Yourfilename.cpp -o Name"
 
 inline void print(const auto& message) {
-    std::cout << message << std::endl;
+    cout << message << endl;
 }
 
-std::string UserInput() {
-    std::string input;
-    std::getline(std::cin, input);
+inline string UserInput() {
+    string input;
+    getline(cin, input);
     return input;
 }
 
-std::string type(const auto& input) {
-    if constexpr (std::is_same_v<std::decay_t<decltype(input)>, bool>) {
+inline string typef(const auto& input) {
+    if constexpr (is_same_v<decay_t<decltype(input)>, bool>) {
         return "bool";
-    } else if constexpr (std::is_integral_v<std::decay_t<decltype(input)>>) {
+    } else if constexpr (is_integral_v<decay_t<decltype(input)>>) {
         return "int";
-    } else if constexpr (std::is_floating_point_v<std::decay_t<decltype(input)>>) {
+    } else if constexpr (is_floating_point_v<decay_t<decltype(input)>>) {
         return "double";
-    } else if constexpr (std::is_same_v<std::decay_t<decltype(input)>, std::string>) {
+    } else if constexpr (is_same_v<decay_t<decltype(input)>, string>) {
         return "string";
-    } else if constexpr (std::is_same_v<std::decay_t<decltype(input)>, const char*>) {
+    } else if constexpr (is_same_v<decay_t<decltype(input)>, const char*>) {
         return "string";
     } else {
         return "unknown";
     }
 }
 
-class STR {
-public:
-    std::string stringlower(const std::string& str) {
-        std::string result = str;
+namespace taskl {
+    inline void wait(double duration) {
+        if (typef(duration) == "double") {
+            this_thread::sleep_for(chrono::milliseconds((static_cast<unsigned int>(floor(duration)*1000))));
+        } else if ((typef(duration) == "int")) {
+            this_thread::sleep_for(chrono::seconds((static_cast<unsigned int>(duration))));
+        }
+    }
+}
+
+namespace stringl {
+    inline string lower(const string& str) {
+        string result = str;
         for (char& c : result) {
-            c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+            c = static_cast<char>(tolower(static_cast<unsigned char>(c)));
         }
         return result;
     }
 
-    std::string stringupper(const std::string& str) {
-        std::string result = str;
+    inline string upper(const string& str) {
+        string result = str;
         for (char& c : result) {
-            c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+            c = static_cast<char>(toupper(static_cast<unsigned char>(c)));
         }
         return result;
     }
 
-    std::string find(const std::string& str, const std::string& substr) {
-        std::size_t pos = str.find(substr);
-        if (pos != std::string::npos) {
-            return std::to_string(pos);
+    inline string find(const string& str, const string& substr) {
+        size_t pos = str.find(substr);
+        if (pos != string::npos) {
+            return to_string(pos);
         };
-        return std::string{};
+        return string{};
     };
 };
 
-class MTH {
-public:
-    int random(int min, int max) {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(min, max);
+namespace mathl {
+    inline int randoml(int min, int max) {
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_int_distribution<> dis(min, max);
         return dis(gen);
     }
 
-    double pi() {
+    inline double pil() {
         return 3.14159265358979323846;
     }
 
-    double huge() {
+    inline double hugel() {
         return 1e9;
     }
 
-    double abs(double value) {
-        return std::abs(value);
+    inline double absl(double value) {
+        return abs(value);
     }
 
-    double ceil(double value) {
-        return std::ceil(value);
+    inline int ceill(double value) {
+        return static_cast<unsigned int>(ceil(value));
     }
 
-    double floor(double value) {
-        return std::floor(value);
+    inline int floorl(double value) {
+        return static_cast<unsigned int>(floor(value));
     }
 
-    double round(double value) {
-        return std::round(value);
+    inline double roundl(double value) {
+        return round(value);
     }
 
-    double sqrt(double value) {
-        return std::sqrt(value);
+    inline double sqrtl(double value) {
+        return sqrt(value);
     }
 
-    double pow(double base, double exponent) {
-        return std::pow(base, exponent);
+    inline double powl(double base, double exponent) {
+        return pow(base, exponent);
     }
-    double mods(double value, int num) {
-        return std::fmod(value, static_cast<double>(num));
+    inline double fmodl(double value, int num) {
+        return fmod(value, static_cast<double>(num));
+    }
+    inline double clampl(double value, double min, double max) {
+        double result;
+        if(value < min) {
+            return min;
+        } else if (value > max){
+            return max;
+        }
+        return value;
+    }
+    inline double sinl(double value) {
+        return sin(value);
+    }
+    inline double cosl(double value) {
+        return cos(value);
+    }
+    inline double tan(double value) {
+        return tan(value);
+    }
+    template<typename... Args>
+    auto max(Args... args)
+    {
+        return std::max({args...});
+    }
+
+    template<typename... Args>
+    auto min(Args... args)
+    {
+        return std::min({args...});
     }
 };
 
-class LDTS {
-public:
-    void GetDataStore(const std::string& name){
-        std::filesystem::path Database = "./DataStore";
-        std::error_code ec;
-        if(!(std::filesystem::exists(Database))) {
-            std::filesystem::create_directory(Database, ec);
-            std::filesystem::path dir = "./DataStore/" + name;
-            if(!(std::filesystem::exists(dir))) {
-                std::ofstream file(dir);
+namespace LocalDataStoreService {
+    inline void GetLocalDataStore(const string& name){
+        fs::path Database = "./LocalDataStore";
+        error_code ec;
+        if(!(fs::exists(Database))) {
+            fs::create_directory(Database, ec);
+            fs::path dir = "./LocalDataStore/" + name;
+            if(!(fs::exists(dir))) {
+                ofstream file(dir);
             }
         } else {
-            std::filesystem::path dir = "./DataStore/" + name;
-            if(!(std::filesystem::exists(dir))) {
-                std::ofstream file(dir);
+            fs::path dir = "./LocalDataStore/" + name;
+            if(!(fs::exists(dir))) {
+                ofstream file(dir);
             }
         }
     }
-    void SetAsync(const std::string& DataStoreName, const auto& str) {
-        std::filesystem::path dir = "./DataStore/" + DataStoreName;
-        if(std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
-            std::ofstream file(dir);
+    inline void SetAsync(const string& DataStoreName, const auto& str) {
+        fs::path dir = "./LocalDataStore/" + DataStoreName;
+        if(fs::exists(dir) && fs::is_regular_file(dir)) {
+            ofstream file(dir);
             if(file.is_open()) {
                 file << str;
                 file.close();
             }
         }
     }
-    std::string GetAsync(const std::string& DataStoreName) {
-        std::filesystem::path dir = "./DataStore/" + DataStoreName;
-        if(std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
-            std::ifstream input(dir);
+    inline string GetAsync(const string& DataStoreName) {
+        fs::path dir = "./LocalDataStore/" + DataStoreName;
+        if(fs::exists(dir) && fs::is_regular_file(dir)) {
+            ifstream input(dir);
             if(input.is_open()) {
-                std::string line;
-                std::getline(input, line);
+                string line;
+                getline(input, line);
                 return line;
             }
         }
         return "";
     }
-    void RemoveAsync(const std::string& DataStoreName) {
-        std::filesystem::path dir = "./DataStore/" + DataStoreName;
-        if(std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
-           std::filesystem::remove(dir);
+    inline void RemoveAsync(const string& DataStoreName) {
+        fs::path dir = "./LocalDataStore/" + DataStoreName;
+        if(fs::exists(dir) && fs::is_regular_file(dir)) {
+           fs::remove(dir);
         }
     }
 };

@@ -37,13 +37,13 @@ stringl::find(str, substr);
 
 Some mathl functions.
 ----------------------
-mathl.randoml(min,max);
+mathl::randoml(min,max);
 //randomize a number between min and max.
-mathl.pil();
+mathl::pil();
 //Return pi.
-mathl.hugel();
+mathl::hugel();
 //Return 9e10 (Couldn't be infinity.)
-mathl.absl(value);
+mathl::absl(value);
 //Return abs of the input value.
 
 LocalDataSaveService Instructions
@@ -51,11 +51,11 @@ LocalDataSaveService Instructions
 //LocalDataStoreService is an idea of mine to match with the computer environment   
 as it saves file locally on your computer, where the header is.
 
-LocalDataStoreService.GetDataStore(name); 
+LocalDataStoreService::GetDataStore(name); 
 //Make the DataSave file if not existing and then the txt to store the data.
-LocalDataStoreService.SetAsync(keyname, value);
+LocalDataStoreService::SetAsync(keyname, value);
 //Replace data, rewrite data.
-LocalDataStoreService.GetAsync(keyname);
+LocalDataStoreService::GetAsync(keyname);
 //Return Data that's present in the file.
-LocalDataStoreService.RemoveAsync(keyname);
+LocalDataStoreService::RemoveAsync(keyname);
 //Remove the Async;

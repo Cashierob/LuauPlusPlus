@@ -8,37 +8,49 @@ or just a Luau compatibility layer for C++.
 
 (Some codes are changed to match the Window environment)
 
-Version #1
+Version #2
 
-Before writing a project using this, remember to copy the Luau++ folder into your folder project
+Before writing a project using this, remember to copy the header into your folder project
 and paste:
 
+"#include "LuauPlusPlus.h"".
 
-"#include "LUAU++/Luau++.h""
+//(Most of the original functions got added "l" at the end to avoid name conflicts or gets changed
+//completely.) 
 
-And
+Some basic core functions.
+------------------------
+printl(str);
+//Print the input.
+UserInput(); 
+//Returns string (like cin << variable).
+typefl(str/int);
+//Return corresponding variable type.
 
-"STR string;
-MTH math;
-LDTS LocalDataStoreService;"
+Some stringl functions.
+----------------------
+stringl::lower(str);
+//Return a string with all downcase.
+stringl::upper(str);
+//Return a string with all uppercase.
+stringl::find(str, substr);
 
-And you'll have to compile with "g++ -std=c++20 Yourfilename.cpp -o Name"
-
-Here are some working luau that works:
-print(str);
-UserInput(); //Returns string (like cin <<)
-type(str/int); //Return corresponding variable type
-string.stringlower(str);
-string.stringupper(str);
-string.find(str, substr);
-math.random(min,max);
-
-And etc.
-
-even LocalDataStoreService that saves data in your local folder that you stores your project.
+Some mathl functions.
+----------------------
+mathl.randoml(min,max);
+//randomize a number between min and max.
+mathl.pil();
+//Return pi.
+mathl.hugel();
+//Return 9e10 (Couldn't be infinity.)
+mathl.absl(value);
+//Return abs of the input value.
 
 LocalDataSaveService Instructions
 ----------------------------
+//LocalDataStoreService is an idea of mine to match with the computer environment   
+as it saves file locally on your computer, where the header is.
+
 LocalDataStoreService.GetDataStore(name); 
 //Make the DataSave file if not existing and then the txt to store the data.
 LocalDataStoreService.SetAsync(keyname, value);

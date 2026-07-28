@@ -72,3 +72,5 @@ filel::Name(File_path, New_file_name);
 //Changes name of a file/directory.
 filel::Destroy(File_path);
 //Remove a directory/File and return true if success.
+filel::Parent(Current_file_path, New_file_path);
+//Move a file path to a newer location.

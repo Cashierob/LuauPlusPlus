@@ -8,7 +8,7 @@ or just a Luau compatibility layer for C++.
 
 (Some codes are changed to match the Window environment)
 
-Version #2
+Version #3
 
 Before writing a project using this, remember to copy the header into your folder project
 and paste:
@@ -37,16 +37,16 @@ stringl::find(str, substr);
 
 Some mathl functions.
 ----------------------
-mathl::randoml(min,max);
+mathl.randoml(min,max);
 //randomize a number between min and max.
 mathl::pil();
 //Return pi.
 mathl::hugel();
-//Return Infinity;
+//Return infinity;
 mathl::absl(value);
 //Return abs of the input value.
 
-LocalDataStoreService Instructions
+LocalDataStoreService Instructions.
 ----------------------------
 //LocalDataStoreService is an idea of mine to match with the computer environment   
 as it saves file locally on your computer, where the header is.
@@ -59,3 +59,16 @@ LocalDataStoreService::GetAsync(keyname);
 //Return Data that's present in the file.
 LocalDataStoreService::RemoveAsync(keyname);
 //Remove the Async;
+LocalDataStoreService::RenameAsync(keyname);
+//Rename the Async;
+
+filel Instructions.
+----------------------------
+//File manipulations.
+
+filel::FindFirstChild(parent_folder_path,filename);
+//Return filename path/true if found.
+filel::Name(File_path, New_file_name);
+//Changes name of a file/directory.
+filel::Destroy(File_path);
+//Remove a directory/File and return true if success.

@@ -12,6 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+//code is only compile-able for C++ version 20 to above.
+
 
 #ifndef LUAU_H
 #define LUAU_H

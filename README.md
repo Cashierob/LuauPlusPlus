@@ -9,7 +9,7 @@ Luau++ is a compatibility layer for C++, where programmers can write Luau-like c
 
 There is also LocalDataStoreService, which will be explained further in the next README.txt, which is in the Luau++ folder
 
-Project Version: #2
+Project Version: #3
 
 I'll be releasing newer updates for the code.
 

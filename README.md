@@ -1,4 +1,4 @@
-# LuauPlusPlus/A-Luau-compatibility-layer-for-C++.
+# LuauPlusPlus/Luau++/A-Luau-compatibility-layer-for-C++.
 
 Luau++ is a compatibility layer for C++, where programmers can write Luau-like code with the main header
 

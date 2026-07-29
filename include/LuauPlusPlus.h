@@ -452,15 +452,17 @@ namespace Instance {
         if (!std::filesystem::exists(Filepath)) {
             if(!std::filesystem::path(Filepath).has_extension()) {
                 std::filesystem::create_directory(Filepath);
+                return {true, Filepath};
             } else {
                 std::ofstream newfilel(Filepath);
                 if (newfilel.is_open()) {
                 newfilel.close();
-                return {true, {}};
+                return {true, Filepath};
             }
             }
+        } else {
+            std::cout << "error: Familiar name detected." << std::endl;
         }
-        std::cout << "error: Familiar name detected." << std::endl;
         return {false,{}};
     }
 }

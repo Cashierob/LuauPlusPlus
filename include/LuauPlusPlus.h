@@ -456,10 +456,12 @@ namespace Instance {
                 std::ofstream newfilel(Filepath);
                 if (newfilel.is_open()) {
                 newfilel.close();
+                return {true, {}};
             }
             }
         }
-        return {std::filesystem::exists(Filepath),Filepath};
+        std::cout << "error: Familiar name detected." << std::endl;
+        return {false,{}};
     }
 }
 

@@ -1,12 +1,14 @@
 <p align="center">
-  <img src="asset/Luau++.png" alt="Luau++ Logo" width="180">
+  <img src="asset/Luau++.png" alt="Luau++ Logo" width="200">
 </p>
 
 <h1 align="center">Luau++</h1>
 
-<p align="center">
+<h3 align="center">
   A Luau-inspired compatibility layer for C++
-</p>
+</h3>
+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 Luau++ is a Luau-inspired small library/compatibility layer for C++, where programmers can write Luau-like code with the main header.
 

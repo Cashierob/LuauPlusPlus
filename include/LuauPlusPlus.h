@@ -108,10 +108,11 @@ namespace {
                         std::ostringstream ss;
                         ss << filetxt.rdbuf();
                         content = ss.str();
+                        filetxt.close();
                         std::ofstream filetxtwritten(path);
                         filetxtwritten << content << '\n';
                         filetxtwritten << datainput;
-                        filetxt.close();
+                        filetxtwritten.close();
                         return true;
                     }
                 }

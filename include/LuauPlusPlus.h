@@ -37,7 +37,8 @@
 #include <type_traits>
 #include <sstream>
 
-namespace {
+namespace Luau {
+    namespace {
     bool isNumber(const std::string& input) {
         try {
             std::size_t pos = 0;
@@ -81,7 +82,7 @@ namespace {
             return false;
         }
         }
-        inline bool Set_Parent(const std::filesystem::path Folderpath) { try {
+        inline bool SetParent(const std::filesystem::path Folderpath) { try {
             std::filesystem::path newPath = Folderpath / path;
                 if(!std::filesystem::path(path).has_extension()) {
                     std::filesystem::create_directory(newPath);
@@ -98,7 +99,7 @@ namespace {
                 return false;
             }
         }
-        inline bool Write_Data(const std::string& datainput) {
+        inline bool WriteData(const std::string& datainput) {
             if(!std::filesystem::exists(path)) {return false;} 
             else {
                 if(path.extension().string() == ".txt") {
@@ -119,7 +120,7 @@ namespace {
             }
             return false;
         }
-        inline bool Delete_Data() {
+        inline bool DeleteData() {
             if(!std::filesystem::exists(path)) {return false;}
             else {
                 if (path.extension().string() == ".txt") {
@@ -129,7 +130,7 @@ namespace {
                 return false;
             }
         }
-        inline Get_Data_Status Read_Data() {
+        inline Get_Data_Status ReadData() {
             if(!std::filesystem::exists(path)) {}
             else {
                 if(path.extension().string() == ".txt") {
@@ -202,7 +203,7 @@ namespace Read {
 }
 
 namespace task {
-    inline void wait(double seconds) noexcept {
+    inline void Wait(double seconds) noexcept {
         if (seconds <= 0.0) return;
         using namespace std::chrono;
         auto dur = duration<double>(seconds);
@@ -210,8 +211,8 @@ namespace task {
     }
 }
 
-namespace stringl {
-    inline std::string lower(const std::string& str) {
+namespace String {
+    inline std::string Lower(const std::string& str) {
         std::string result = str;
         for (char& c : result) {
             c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
@@ -219,7 +220,7 @@ namespace stringl {
         return result;
     }
 
-    inline std::string upper(const std::string& str) {
+    inline std::string Upper(const std::string& str) {
         std::string result = str;
         for (char& c : result) {
             c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
@@ -227,7 +228,7 @@ namespace stringl {
         return result;
     }
 
-    inline std::string find_str(const std::string& str, const std::string& substr) {
+    inline std::string Find(const std::string& str, const std::string& substr) {
         std::size_t pos = str.find(substr);
         if (pos != std::string::npos) {
             return std::to_string(pos);
@@ -236,51 +237,51 @@ namespace stringl {
     }
 };
 
-namespace mathl {
-    inline int random(int min, int max) {
+namespace Math {
+    inline int Random(int min, int max) {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(min, max);
         return dis(gen);
     }
 
-    inline double pi() {
+    inline double Pi() {
         return 3.14159265358979323846;
     }
 
-    inline double huge() {
+    inline double Huge() {
         return std::numeric_limits<double>::infinity();
     }
 
-    inline double absl(double value) noexcept {
+    inline double Abs(double value) noexcept {
         return std::abs(value);
     }
 
-    inline int ceill(double value) noexcept {
+    inline int Ceil(double value) noexcept {
         return static_cast<int>(std::ceil(value));
     }
 
-    inline int floorl(double value) noexcept {
+    inline int Floor(double value) noexcept {
         return static_cast<int>(std::floor(value));
     }
 
-    inline double roundl(double value) noexcept {
+    inline double Round(double value) noexcept {
         return std::round(value);
     }
 
-    inline double sqrtl(double value) noexcept {
+    inline double Sqrt(double value) noexcept {
         return std::sqrt(value);
     }
 
-    inline double powl(double base, double exponent) noexcept {
+    inline double Pow(double base, double exponent) noexcept {
         return std::pow(base, exponent);
     }
 
-    inline double fmodl(double value, int num) noexcept {
+    inline double Fmod(double value, int num) noexcept {
         return std::fmod(value, static_cast<double>(num));
     }
 
-    inline double clamp(double value, double min, double max) noexcept {
+    inline double Clamp(double value, double min, double max) noexcept {
         if (value < min) {
             return min;
         } else if (value > max) {
@@ -289,26 +290,26 @@ namespace mathl {
         return value;
     }
 
-    inline double sinl(double value) noexcept {
+    inline double Sin(double value) noexcept {
         return std::sin(value);
     }
 
-    inline double cosl(double value) noexcept {
+    inline double Cos(double value) noexcept {
         return std::cos(value);
     }
 
-    inline double tanl(double value) noexcept {
+    inline double Tan(double value) noexcept {
         return std::tan(value);
     }
 
     template<typename... Args>
-    auto maxl(Args... args) noexcept
+    auto Max(Args... args) noexcept
     {
         return std::max({args...});
     }
 
     template<typename... Args>
-    auto minl(Args... args) noexcept
+    auto Min(Args... args) noexcept
     {
         return std::min({args...});
     }
@@ -400,7 +401,7 @@ namespace LocalDataStoreService {
     }
 };
 
-namespace filel {
+namespace File {
 
     inline Instanceactions FindFirstChild(const std::filesystem::path& Parentfolder, const std::string& Filename) {
         if (!std::filesystem::exists(Parentfolder)) {
@@ -446,7 +447,7 @@ namespace filel {
 }
 
 namespace Instance {
-    inline Instanceactions New_File(const std::string& Filename) {
+    inline Instanceactions NewFile(const std::string& Filename) {
         std::filesystem::path tempfold = ".";
         std::filesystem::path Filepath = tempfold / Filename;
 
@@ -468,4 +469,5 @@ namespace Instance {
     }
 }
 
+}
 #endif

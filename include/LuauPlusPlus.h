@@ -12,6 +12,9 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+//Project inception date: 7/26/2026.
+//Last modified 7/29/2026.
+
 //Only compatible with C++ Version 20 or above.
 //Compile your CPP file with "g++ -std=c++20 Yourfilename.cpp -o Name".
 
@@ -32,19 +35,129 @@
 #include <string>
 #include <thread>
 #include <type_traits>
+#include <sstream>
+
+namespace {
+    struct Instanceactions {
+        bool found;
+        std::filesystem::path path;
+
+        struct Get_Data_Status {
+            bool sucess;
+            std::string str;
+        };
+
+        inline bool Destroy() {
+            try { 
+                if(!std::filesystem::path(path).has_extension()) {
+                    std::filesystem::remove_all(path);
+                    return true;
+                } else {
+                    std::filesystem::remove(path);
+                    return true;
+                }
+                return false;
+            } catch (...) {
+                return false;
+            }
+        }
+        inline bool Name(const std::string& Newname) 
+        { try {
+            std::filesystem::path newPath = path.parent_path() / (Newname + path.extension().string());
+            std::filesystem::rename(path, newPath);path = newPath;} 
+            catch (...) 
+            {}
+        }
+        inline bool Set_Parent(const std::filesystem::path Folderpath) { try {
+            std::filesystem::path newPath = Folderpath / path;
+                if(!std::filesystem::path(path).has_extension()) {
+                    std::filesystem::create_directory(newPath);
+                    std::filesystem::remove_all(path);
+                    path = newPath;
+                    return true;
+                } else if (std::filesystem::exists(path)) {
+                    std::filesystem::rename(path, newPath);
+                    path = newPath;
+                    return true;
+                }
+                return false;
+            } catch (...) {
+                return false;
+            }
+        }
+        inline bool Write_Data(const std::string& datainput) {
+            if(!std::filesystem::exists(path)) {return false;} 
+            else {
+                if(path.extension().string() == ".txt") {
+                    std::ifstream filetxt(path);
+                    if(filetxt.is_open()) {
+                        std::string content;
+                        std::ostringstream ss;
+                        ss << filetxt.rdbuf();
+                        content = ss.str();
+                        std::ofstream filetxtwritten(path);
+                        filetxtwritten << content << '\n';
+                        filetxtwritten << datainput;
+                        filetxt.close();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        inline bool Delete_Data() {
+            if(!std::filesystem::exists(path)) {return false;}
+            else {
+                if (path.extension().string() == ".txt") {
+                    std::ofstream textfile(path);
+                    if(textfile.is_open()) {textfile.close(); return true;}
+                }
+                return false;
+            }
+        }
+        inline Get_Data_Status Read_Data() {
+            if(!std::filesystem::exists(path)) {}
+            else {
+                if(path.extension().string() == ".txt") {
+                    std::ifstream textfile(path);
+                    std::ostringstream ss;
+                    ss << textfile.rdbuf();
+                    return {true, ss.str()};
+                }
+            }
+            return {false,""};
+        }
+        inline Instanceactions FindFirstChild(const std::string& Filename) {
+            if (!std::filesystem::exists(path)) {
+                return {false,{}};
+            }
+            if (std::filesystem::is_directory(path)) {
+                std::filesystem::path ChildFile = path / Filename;
+                if(!std::filesystem::exists(ChildFile)) {return {false, {}};}
+                return {true, ChildFile};
+            }
+            return {false,{}};
+        }
+        inline Instanceactions Parent() {
+            if(!std::filesystem::exists(path)) {return {false,{}};}
+            if(!std::filesystem::exists(path.parent_path())) {return {false,{}};}
+            return {true, path.parent_path()};
+        }
+    };
+}
 
 
-inline void printl(const auto& message) {
+inline void print(const auto& message) {
     std::cout << message << std::endl;
 }
 
-inline std::string UserInput() {
+inline std::string read() {
     std::string input;
     std::getline(std::cin, input);
     return input;
 }
 
-inline std::string typefl(const auto& input) noexcept {
+inline std::string typef(const auto& input) noexcept {
     if constexpr (std::is_same_v<std::decay_t<decltype(input)>, bool>) {
         return "bool";
     } else if constexpr (std::is_integral_v<std::decay_t<decltype(input)>>) {
@@ -60,18 +173,17 @@ inline std::string typefl(const auto& input) noexcept {
     }
 }
 
-namespace taskl {
-    inline void waitl(double duration) noexcept {
-        if (typefl(duration) == "double") {
-            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<unsigned int>(std::floor(duration) * 1000)));
-        } else if (typefl(duration) == "int") {
-            std::this_thread::sleep_for(std::chrono::seconds(static_cast<unsigned int>(duration)));
-        }
+namespace task {
+    inline void wait(double seconds) noexcept {
+        if (seconds <= 0.0) return;
+        using namespace std::chrono;
+        auto dur = duration<double>(seconds);
+        std::this_thread::sleep_for(duration_cast<milliseconds>(dur));
     }
 }
 
 namespace stringl {
-    inline std::string lowerl(const std::string& str) {
+    inline std::string lower(const std::string& str) {
         std::string result = str;
         for (char& c : result) {
             c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
@@ -79,7 +191,7 @@ namespace stringl {
         return result;
     }
 
-    inline std::string upperl(const std::string& str) {
+    inline std::string upper(const std::string& str) {
         std::string result = str;
         for (char& c : result) {
             c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
@@ -87,7 +199,7 @@ namespace stringl {
         return result;
     }
 
-    inline std::string findl(const std::string& str, const std::string& substr) {
+    inline std::string find_str(const std::string& str, const std::string& substr) {
         std::size_t pos = str.find(substr);
         if (pos != std::string::npos) {
             return std::to_string(pos);
@@ -104,11 +216,11 @@ namespace mathl {
         return dis(gen);
     }
 
-    inline double pil() {
+    inline double pi() {
         return 3.14159265358979323846;
     }
 
-    inline double hugel() {
+    inline double huge() {
         return std::numeric_limits<double>::infinity();
     }
 
@@ -140,7 +252,7 @@ namespace mathl {
         return std::fmod(value, static_cast<double>(num));
     }
 
-    inline double clampl(double value, double min, double max) noexcept {
+    inline double clamp(double value, double min, double max) noexcept {
         if (value < min) {
             return min;
         } else if (value > max) {
@@ -225,9 +337,9 @@ namespace LocalDataStoreService {
         if (std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
             std::ifstream input(dir);
             if (input.is_open()) {
-                std::string line;
-                std::getline(input, line);
-                return {true,line};
+                std::ostringstream ss;
+                ss << input.rdbuf();
+                return {true,ss.str()};
             }
         }
         return {false,""};
@@ -261,12 +373,8 @@ namespace LocalDataStoreService {
 };
 
 namespace filel {
-    struct FindFirstChildResult {
-        bool found;
-        std::filesystem::path path;
-    };
 
-    inline FindFirstChildResult FindFirstChild(const std::filesystem::path& Parentfolder, const std::string& Filename) {
+    inline Instanceactions FindFirstChild(const std::filesystem::path& Parentfolder, const std::string& Filename) {
         if (!std::filesystem::exists(Parentfolder)) {
             return {false,{}};
         }
@@ -300,7 +408,32 @@ namespace filel {
         }
         return false;
     }
-    
+    inline bool Parent(const std::filesystem::path CurrentFilePath, const std::filesystem::path NewFilePath) {
+        if(!std::filesystem::exists(CurrentFilePath)) {
+            return false;
+        }
+        std::filesystem::rename(CurrentFilePath,NewFilePath);
+        return true;
+    }
+}
+
+namespace Instance {
+    inline Instanceactions New_File(const std::string& Filename) {
+        std::filesystem::path tempfold = ".";
+        std::filesystem::path Filepath = tempfold / Filename;
+
+        if (!std::filesystem::exists(Filepath)) {
+            if(!std::filesystem::path(Filepath).has_extension()) {
+                std::filesystem::create_directory(Filepath);
+            } else {
+                std::ofstream newfilel(Filepath);
+                if (newfilel.is_open()) {
+                newfilel.close();
+            }
+            }
+        }
+        return {std::filesystem::exists(Filepath),Filepath};
+    }
 }
 
 #endif

@@ -38,7 +38,7 @@
 #include <sstream>
 
 namespace Luau {
-    namespace {
+    namespace Detail {
     bool isNumber(const std::string& input) {
         try {
             std::size_t pos = 0;
@@ -49,12 +49,12 @@ namespace Luau {
             return false;
         }
     }
-    struct Instanceactions {
+    struct InstanceHandle {
         bool found;
         std::filesystem::path path;
 
         struct Get_Data_Status {
-            bool sucess;
+            bool success;
             std::string str;
         };
 
@@ -131,7 +131,7 @@ namespace Luau {
             }
         }
         inline Get_Data_Status ReadData() {
-            if(!std::filesystem::exists(path)) {}
+            if(!std::filesystem::exists(path)) {return {false, ""};}
             else {
                 if(path.extension().string() == ".txt") {
                     std::ifstream textfile(path);
@@ -142,7 +142,7 @@ namespace Luau {
             }
             return {false,""};
         }
-        inline Instanceactions FindFirstChild(const std::string& Filename) {
+        inline Detail::InstanceHandle FindFirstChild(const std::string& Filename) {
             if (!std::filesystem::exists(path)) {
                 return {false,{}};
             }
@@ -153,7 +153,7 @@ namespace Luau {
             }
             return {false,{}};
         }
-        inline Instanceactions Parent() {
+        inline Detail::InstanceHandle Parent() {
             if(!std::filesystem::exists(path)) {return {false,{}};}
             if(!std::filesystem::exists(path.parent_path())) {return {false,{}};}
             return {true, path.parent_path()};
@@ -183,19 +183,19 @@ inline std::string Typeof(const auto& input) noexcept {
 }
 
 namespace Read {
-    inline std::string Read_String() {
+    inline std::string ReadString() {
         std::string input;
         std::getline(std::cin,input);
-        while(isNumber(input)) {
+        while(Detail::isNumber(input)) {
             std::getline(std::cin,input);
         }
         return input;
     }
 
-    inline double Read_Number() {
+    inline double ReadNumber() {
         std::string value;
         std::getline(std::cin,value);
-        while(!(isNumber(value))) {
+        while(!(Detail::isNumber(value))) {
             std::getline(std::cin,value);
         }
         return std::stod(value);
@@ -316,19 +316,20 @@ namespace Math {
 };
 
 namespace LocalDataStoreService {
+    const std::string Location = "./LocalDataStore/";
     inline bool GetLocalDataStore(const std::string& name) {
         try {
             std::filesystem::path Database = "./LocalDataStore";
             std::error_code ec;
             if (!(std::filesystem::exists(Database))) {
                 std::filesystem::create_directory(Database, ec);
-                std::filesystem::path dir = "./LocalDataStore/" + name;
+                std::filesystem::path dir = Location + name;
                 if (!(std::filesystem::exists(dir))) {
                     std::ofstream file(dir);
                     return true;
                 }
             } else {
-                std::filesystem::path dir = "./LocalDataStore/" + name;
+                std::filesystem::path dir = Location + name;
                 if (!(std::filesystem::exists(dir))) {
                     std::ofstream file(dir);
                     return true;
@@ -342,7 +343,7 @@ namespace LocalDataStoreService {
 
     inline bool SetAsync(const std::string& DataStoreName, const auto& str) {
         try {
-            std::filesystem::path dir = "./LocalDataStore/" + DataStoreName;
+            std::filesystem::path dir = Location + DataStoreName;
             if (std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
                 std::ofstream file(dir);
                 if (file.is_open()) {
@@ -362,7 +363,7 @@ namespace LocalDataStoreService {
         std::string data;
     };
     inline GetAsyncResult GetAsync(const std::string& DataStoreName) {
-        std::filesystem::path dir = "./LocalDataStore/" + DataStoreName;
+        std::filesystem::path dir = Location + DataStoreName;
         if (std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
             std::ifstream input(dir);
             if (input.is_open()) {
@@ -376,7 +377,7 @@ namespace LocalDataStoreService {
 
     inline bool RemoveAsync(const std::string& DataStoreName) {
         try {
-            std::filesystem::path dir = "./LocalDataStore/" + DataStoreName;
+            std::filesystem::path dir = Location + DataStoreName;
             if (std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
                 std::filesystem::remove(dir);
                 return true;
@@ -388,8 +389,8 @@ namespace LocalDataStoreService {
     }
     inline bool RenameAsync(const std::string& DataStoreName, const std::string& Renamestring) {
          try {
-            std::filesystem::path dir = "./LocalDataStore/" + DataStoreName;
-            std::filesystem::path renamed = "./LocalDataStore/" + Renamestring;
+            std::filesystem::path dir = Location + DataStoreName;
+            std::filesystem::path renamed = Location + Renamestring;
             if (std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {
                 std::filesystem::rename(dir, renamed);
                 return true;
@@ -403,7 +404,7 @@ namespace LocalDataStoreService {
 
 namespace File {
 
-    inline Instanceactions FindFirstChild(const std::filesystem::path& Parentfolder, const std::string& Filename) {
+    inline Detail::InstanceHandle FindFirstChild(const std::filesystem::path& Parentfolder, const std::string& Filename) {
         if (!std::filesystem::exists(Parentfolder)) {
             return {false,{}};
         }
@@ -447,7 +448,7 @@ namespace File {
 }
 
 namespace Instance {
-    inline Instanceactions NewFile(const std::string& Filename) {
+    inline Detail::InstanceHandle NewFile(const std::string& Filename) {
         std::filesystem::path tempfold = ".";
         std::filesystem::path Filepath = tempfold / Filename;
 

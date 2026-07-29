@@ -38,6 +38,16 @@
 #include <sstream>
 
 namespace {
+    bool isNumber(const std::string& input) {
+        try {
+            std::size_t pos = 0;
+            double value = std::stod(input, &pos);
+            (void)value;
+            return pos == input.size();
+        } catch (...) {
+            return false;
+        }
+    }
     struct Instanceactions {
         bool found;
         std::filesystem::path path;
@@ -63,10 +73,13 @@ namespace {
         }
         inline bool Name(const std::string& Newname) 
         { try {
+            if(!std::filesystem::exists(path)) {return false;}
             std::filesystem::path newPath = path.parent_path() / (Newname + path.extension().string());
-            std::filesystem::rename(path, newPath);path = newPath;} 
-            catch (...) 
-            {}
+            std::filesystem::rename(path, newPath);
+            path = newPath; 
+            return true;} catch (...) {
+            return false;
+        }
         }
         inline bool Set_Parent(const std::filesystem::path Folderpath) { try {
             std::filesystem::path newPath = Folderpath / path;
@@ -147,17 +160,11 @@ namespace {
 }
 
 
-inline void print(const auto& message) {
+inline void Print(const auto& message) {
     std::cout << message << std::endl;
 }
 
-inline std::string read() {
-    std::string input;
-    std::getline(std::cin, input);
-    return input;
-}
-
-inline std::string typef(const auto& input) noexcept {
+inline std::string Typeof(const auto& input) noexcept {
     if constexpr (std::is_same_v<std::decay_t<decltype(input)>, bool>) {
         return "bool";
     } else if constexpr (std::is_integral_v<std::decay_t<decltype(input)>>) {
@@ -170,6 +177,26 @@ inline std::string typef(const auto& input) noexcept {
         return "string";
     } else {
         return "unknown";
+    }
+}
+
+namespace Read {
+    inline std::string Read_String() {
+        std::string input;
+        std::getline(std::cin,input);
+        while(isNumber(input)) {
+            std::getline(std::cin,input);
+        }
+        return input;
+    }
+
+    inline double Read_Number() {
+        std::string value;
+        std::getline(std::cin,value);
+        while(!(isNumber(value))) {
+            std::getline(std::cin,value);
+        }
+        return std::stod(value);
     }
 }
 

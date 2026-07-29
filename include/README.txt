@@ -8,7 +8,7 @@ or just a Luau compatibility layer for C++.
 
 (Some codes are changed to match the Window environment)
 
-Version #3
+Version #4
 
 Before writing a project using this, remember to copy the header into your folder project
 and paste:
@@ -72,5 +72,6 @@ filel::Name(File_path, New_file_name);
 //Changes name of a file/directory.
 filel::Destroy(File_path);
 //Remove a directory/File and return true if success.
-filel::Parent(Current_file_path, New_file_path);
-//Move a file path to a newer location.
+
+and many more.
+(Soon there will be an example folder for showcasing codes.)

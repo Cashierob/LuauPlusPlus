@@ -56,7 +56,7 @@ LocalDataStoreService Instructions.
 //LocalDataStoreService is an idea of mine to match with the computer environment   
 as it saves file locally on your computer, where the header is.
 
-Luau::LocalDataStoreService::GetDataStore(name); 
+Luau::LocalDataStoreService::GetLocalDataStore(name); 
 //Make the DataSave file if not existing and then the txt to store the data.
 Luau::LocalDataStoreService::SetAsync(keyname, value);
 //Replace data, rewrite data.

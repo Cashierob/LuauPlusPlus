@@ -2,7 +2,7 @@ Made By @cashierob Discord
 
 (A very very early project.)
 
-This is a small Luau-inspired C++ library that lets developers write Luau-like code by providing 
+This is a small A C++ library that lets developers write Luau-like code by providing 
 familiar Luau functions and services implemented in C++.
 or just a Luau compatibility layer for C++.
 
@@ -20,12 +20,17 @@ and paste:
 
 Some basic core functions.
 ------------------------
-printl(str);
+Print(str);
 //Print the input.
-UserInput(); 
-//Returns string (like cin << variable).
-typefl(str/int);
+Typeof(str/int);
 //Return corresponding variable type.
+
+Some basic Read functions.
+------------------------
+Read::Read_String();
+//Repeats if integer, returns a string.
+Read::Read_Number();
+//Repeats if string, returns an integer (Mostly double);
 
 Some stringl functions.
 ----------------------
@@ -39,9 +44,9 @@ Some mathl functions.
 ----------------------
 mathl.randoml(min,max);
 //randomize a number between min and max.
-mathl::pil();
+mathl::pi();
 //Return pi.
-mathl::hugel();
+mathl::huge();
 //Return infinity;
 mathl::absl(value);
 //Return abs of the input value.

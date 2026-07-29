@@ -1,6 +1,6 @@
 # LuauPlusPlus/Luau++/A-Luau-compatibility-layer-for-C++.
 
-Luau++ is a small library/compatibility layer for C++, where programmers can write Luau-like code with the main header.
+Luau++ is a Luau-inspired small library/compatibility layer for C++, where programmers can write Luau-like code with the main header.
 
 
 (Disclaimer: Luau++ is an independent project and is not affiliated with, sponsored by, or endorsed by Roblox Corporation.)

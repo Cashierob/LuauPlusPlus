@@ -20,52 +20,35 @@ and paste:
 
 Some basic core functions.
 ------------------------
-Print(str);
-
+Luau::Print(str);
 //Print the input.
+Luau::Typeof(str/int);
+//Return the corresponding variable type.
 
-Typeof(str/int);
-
-//Return corresponding variable type.
-
-Some basic Read functions.
+Some basic Luau::Read functions.
 ------------------------
-Read::Read_String();
+Luau::Read::ReadString();
+//Repeats, if integer, returns a string.
+Luau::Read::ReadNumber();
+//Repeats, if string, returns an integer (Mostly double);
 
-//Repeats if integer, returns a string.
-
-Read::Read_Number();
-
-//Repeats if string, returns an integer (Mostly double);
-
-Some stringl functions.
+Some String functions.
 ----------------------
-stringl::lower(str);
-
+Luau::String::Lower(str);
 //Return a string with all downcase.
-
-stringl::upper(str);
-
+Luau::String::Upper(str);
 //Return a string with all uppercase.
+Luau::String::Find(str, substr);
 
-stringl::find(str, substr);
-
-Some mathl functions.
+Some Math functions.
 ----------------------
-mathl.randoml(min,max);
-
-//randomize a number between min and max.
-
-mathl::pi();
-
+Luau::Math::Random(min,max);
+//Randomize a number between min and max.
+Luau::Math::Pi();
 //Return pi.
-
-mathl::huge();
-
+Luau::Math::Huge();
 //Return infinity;
-
-mathl::absl(value);
-
+Luau::Math::Abs(value);
 //Return abs of the input value.
 
 LocalDataStoreService Instructions.
@@ -73,42 +56,27 @@ LocalDataStoreService Instructions.
 //LocalDataStoreService is an idea of mine to match with the computer environment   
 as it saves file locally on your computer, where the header is.
 
-LocalDataStoreService::GetLocalDataStore(name);
-
+Luau::LocalDataStoreService::GetDataStore(name); 
 //Make the DataSave file if not existing and then the txt to store the data.
-
-LocalDataStoreService::SetAsync(keyname, value);
-
+Luau::LocalDataStoreService::SetAsync(keyname, value);
 //Replace data, rewrite data.
-
-LocalDataStoreService::GetAsync(keyname);
-
+Luau::LocalDataStoreService::GetAsync(keyname);
 //Return Data that's present in the file.
-
-LocalDataStoreService::RemoveAsync(keyname);
-
+Luau::LocalDataStoreService::RemoveAsync(keyname);
 //Remove the Async;
-
-LocalDataStoreService::RenameAsync(keyname);
-
+Luau::LocalDataStoreService::RenameAsync(keyname);
 //Rename the Async;
 
-filel Instructions.
+File Instructions.
 ----------------------------
 //File manipulations.
 
-filel::FindFirstChild(parent_folder_path,filename);
-
+Luau::File::FindFirstChild(parent_folder_path,filename);
 //Return filename path/true if found.
-
-filel::Name(File_path, New_file_name);
-
+Luau::File::Name(File_path, New_file_name);
 //Changes name of a file/directory.
-
-filel::Destroy(File_path);
-
+Luau::File::Destroy(File_path);
 //Remove a directory/File and return true if success.
 
 and many more.
-
 (Soon there will be an example folder for showcasing codes.)

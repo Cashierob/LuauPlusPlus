@@ -8,8 +8,6 @@
   A Luau-inspired compatibility layer for C++
 </p>
 
-# LuauPlusPlus/Luau++/A-Luau-compatibility-layer-for-C++.
-
 Luau++ is a Luau-inspired small library/compatibility layer for C++, where programmers can write Luau-like code with the main header.
 
 
@@ -17,7 +15,7 @@ Luau++ is a Luau-inspired small library/compatibility layer for C++, where progr
 
 (Fully written in C++)
 
-There is also LocalDataStoreService, which will be explained further in the next README.txt, which is in the Luau++ folder
+Further informations will be given in the include, README.txt
 
 Project Version: #4
 

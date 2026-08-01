@@ -8,7 +8,7 @@
   A Luau-inspired compatibility layer for C++
 </h3>
 
------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
 
 Luau++ is a Luau-inspired small library/compatibility layer for C++, where programmers can write Luau-like code with the main header.
 
@@ -36,15 +36,15 @@ I'll be releasing newer updates for the code.
 ## LocalDataStoreService.
 ## Utilities (Like TypeOf())
 
-============================================================================================================================
+---------------------------------------------------------------------------------------------------------------------------
 
 # In Development
 
-## Table
-## String
-## Instance
-## Task
-## ImageConverter
+- Table
+- String
+- Instance
+- Task
+- ImageConverter
 
 
 @Cashierob

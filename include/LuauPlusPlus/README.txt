@@ -8,7 +8,7 @@ or just a Luau compatibility layer for C++.
 
 (Some codes are changed to match the Window environment)
 
-Version #4
+Version #5
 
 Before writing a project using this, remember to copy the header into your folder project
 and paste:
@@ -79,4 +79,3 @@ Luau::File::Destroy(File_path);
 //Remove a directory/File and return true if success.
 
 and many more.
-(Soon there will be an example folder for showcasing codes.)

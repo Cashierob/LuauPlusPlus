@@ -19,7 +19,7 @@ Luau++ is a Luau-inspired small library/compatibility layer for C++, where progr
 
 Further informations will be given in the include, README.txt
 
-Project Version: #4
+Project Version: #5
 
 I'll be releasing newer updates for the code.
 

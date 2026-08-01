@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="asset/Luau++.png" alt="Luau++ Logo" width="200">
+  <img src="assets/Luau++.png" alt="Luau++ Logo" width="200">
 </p>
 
 <h1 align="center">Luau++</h1>

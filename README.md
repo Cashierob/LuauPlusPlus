@@ -22,6 +22,7 @@ Further informations will be given in the include, README.txt
 Project Version: #4
 
 I'll be releasing newer updates for the code.
+
 ----------------------------------------------------------------------------------------------------------------------------
 # Current Luau ++ API references.
 

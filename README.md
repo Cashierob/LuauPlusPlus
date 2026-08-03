@@ -30,7 +30,7 @@ I'll be releasing newer updates for the code.
 - Input (Such as Read::ReadNumber()/ReadString()).
 - String (Half done).
 - Math (Has the essensials).
-- Table (Currently has the ArrayTable, does accept 5 types of data (Bool, int, double, string, file path)).
+- Table (Currently has the ArrayTable, does accept 5 types of data in the same array (Bool, int, double, string, file path)).
 - Task (Wait() and Spawn() (Advanced Thread)).
 - Instance (Instance::NewFile(), will add Instance::NewFolder()).
 - LocalDataStoreService.

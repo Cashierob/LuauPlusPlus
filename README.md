@@ -40,11 +40,12 @@ I'll be releasing newer updates for the code.
 
 # In Development
 
-- Table
+- Table (Dictionary table)
 - String
 - Instance
 - Task
-- ImageConverter
+- ImageConverter (Will be in a seperated extension file)
+- HTTP request (Will be in a seperated extension file)
 
 
 @Cashierob

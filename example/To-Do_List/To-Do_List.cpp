@@ -4,22 +4,22 @@
 
 int main() {
     Luau::Print("Note name: "); 
-    Luau::local name = Luau::L(Luau::Read::ReadString());
+    Luau::local name = Luau::Read::ReadString();
     //Get User Input in string only, repeats if invalid until success.
     
-    auto note = Luau::Instance::NewFile(Luau::L(name) + ".txt");
+    auto note = Luau::Instance::NewFile(name + ".txt");
     //Create txt file for saving.
     if (!note.found) {
         Luau::Print("Failed to create note.");
         return 0;
     }
 
-    Luau::Print("Note created: " + Luau::L(name) + ".txt");
+    Luau::Print("Note created: " + name + ".txt");
     //Just printing, that's all (std::cout << message << std::endl;).
     Luau::Print("Type your notes (type 'exit' to quit):\n");
 
     while (true) {
-        std::string content = Luau::Read::ReadString(); 
+        Luau::local content = Luau::Read::ReadString(); 
         //Get user input (Only accepts string and will repeat until success.)
 
         if (content == "exit") break;

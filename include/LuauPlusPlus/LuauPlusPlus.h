@@ -47,48 +47,50 @@
 
 namespace Luau {
 
-    typedef std::variant<std::string, int, double, bool, std::filesystem::path, float> local;
+    class local {
 
-    std::variant<std::string, int, double, bool, std::filesystem::path, float> L(const std::string& value) {
-        return value;
-    }
+    std::variant<std::string, int, double, bool, std::filesystem::path, float> data;
+    public:
 
-    template <typename T>
-    inline std::variant<std::string, int, double, bool, std::filesystem::path, float> L(const T& value) {
-        if constexpr (std::is_same_v<T, int>) {
-            return value;
-        } else if constexpr (std::is_same_v<T, double>) {
-            return value;
-        } else if constexpr (std::is_same_v<T, bool>) {
-            return value;
-        } else if constexpr (std::is_same_v<T, std::filesystem::path>) {
-            return value;
-        } else if constexpr (std::is_same_v<T, float>) {
-            return value;
-        } else {
-            return std::string{};
+        local() = default; // nil
+        local(bool b) : data(b) {}
+        local(int i) : data(static_cast<double>(i)) {}
+        local(double d) : data(d) {}
+        local(const char* s) : data(std::string(s)) {}
+        local(std::string s) : data(std::move(s)) {}
+
+        friend local operator+(const local& lhs, const local& rhs) {
+            return local(lhs) + rhs; 
         }
-    }
 
-    inline std::string L(const std::variant<std::string, int, double, bool, std::filesystem::path, float>& value) {
-        return std::visit([](const auto& v) -> std::string {
-            using T = std::decay_t<decltype(v)>;
-            if constexpr (std::is_same_v<T, std::string>)
-                return v;
-            else if constexpr (std::is_same_v<T, int>)
-                return std::to_string(v);
-            else if constexpr (std::is_same_v<T, double>)
-                return std::to_string(v);
-            else if constexpr (std::is_same_v<T, bool>)
-                return v ? "true" : "false";
-            else if constexpr (std::is_same_v<T, std::filesystem::path>)
-                return v.string();
-            else if constexpr (std::is_same_v<T, float>)
-                return std::to_string(v);
-            else
-                return "";
-        }, value);
-    }
+        template<typename T>
+        bool operator==(const T& other) const {
+            if (std::holds_alternative<std::string>(data) && std::holds_alternative<std::string>(other.data)) {
+                return std::get<std::string>(data) == std::get<std::string>(other.data);
+            }
+            if (std::holds_alternative<double>(data) && std::holds_alternative<double>(other.data)) {
+                return std::get<double>(data) == std::get<double>(other.data);
+            }
+            if (std::holds_alternative<bool>(data) && std::holds_alternative<bool>(other.data)) {
+                return std::get<bool>(data) == std::get<bool>(other.data);
+            }
+            return false; 
+        }
+
+        operator std::string() const {
+            if (std::holds_alternative<std::string>(data)) {
+                return std::get<std::string>(data);
+            }
+            // Optional: handle converting numbers/booleans to string like Luau's tostring()
+            if (std::holds_alternative<double>(data)) {
+                return std::to_string(std::get<double>(data));
+            }
+            if (std::holds_alternative<bool>(data)) {
+                return std::get<bool>(data) ? "true" : "false";
+            }
+            return "nil";
+        }
+    };
 
     
 

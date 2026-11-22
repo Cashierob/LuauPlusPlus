@@ -20,8 +20,12 @@ namespace Luau {
         std::thread Function;
         SpawnActions() = default;
         SpawnActions(std::thread thread) : Function(std::move(thread)) {}
-        inline void WaitThread() {if(Function.joinable()) {Function.join();}}
-        inline void DetachThread() {if(Function.joinable()) {Function.detach();}}
+        inline void WaitThread() {
+            if(Function.joinable()) {Function.join();}
+        }
+        inline void DetachThread() {
+            if(Function.joinable()) {Function.detach();}
+        }
     };
     namespace Task {
         inline SpawnActions Spawn(const std::function<void()> funct) {

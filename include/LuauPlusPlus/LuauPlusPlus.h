@@ -65,7 +65,9 @@ inline void Print(const std::variant<Types...>& message) {
 
 inline void SystemWait() {std::cin.get();}
 
-inline std::string Typeof(const auto& input) noexcept {
+template<typename T>
+
+inline std::string Typeof(const T& input) noexcept {
     if constexpr (std::is_same_v<std::decay_t<decltype(input)>, bool>) {return "bool";}
     else if constexpr (std::is_integral_v<std::decay_t<decltype(input)>>) {return "int";} 
     else if constexpr (std::is_floating_point_v<std::decay_t<decltype(input)>>) {return "double";} 
@@ -124,6 +126,7 @@ namespace String {
         }
         return std::string{};
     }
+
     template<typename T>
     inline std::string Tostring(const T& Value) {
         try {return to_string(Value);} catch (...) {return "";}
@@ -141,20 +144,46 @@ namespace Math {
         std::uniform_int_distribution<> dis(min, max);
         return dis(gen);
     }
-    inline double Pi() {return 3.14159265358979323846;}
-    inline double Huge() {return std::numeric_limits<double>::infinity();}
-    inline double Abs(double value) noexcept {return std::abs(value);}
-    inline int Ceil(double value) noexcept {return static_cast<int>(std::ceil(value));}
-    inline int Floor(double value) noexcept {return static_cast<int>(std::floor(value));}
-    inline double Round(double value) noexcept {return std::round(value);}
-    inline double Sqrt(double value) noexcept {return std::sqrt(value);}
-    inline double Pow(double base, double exponent) noexcept {return std::pow(base, exponent);}
-    inline double Fmod(double value, int num) noexcept {return std::fmod(value, static_cast<double>(num));}
+    inline double Pi() {
+        return 3.14159265358979323846;
+    }
+    inline double Huge() {
+        return std::numeric_limits<double>::infinity();
+    }
+    inline double Abs(double value) noexcept {
+        return std::abs(value);
+    }
+    inline int Ceil(double value) noexcept {
+        return static_cast<int>(std::ceil(value));
+    }
+    inline int Floor(double value) noexcept {
+        return static_cast<int>(std::floor(value));
+    }
+    inline double Round(double value) noexcept {
+        return std::round(value);
+    }
+    inline double Sqrt(double value) noexcept {
+        return std::sqrt(value);
+    }
+    inline double Pow(double base, double exponent) noexcept {
+        return std::pow(base, exponent);
+    }
+    inline double Fmod(double value, int num) noexcept {
+        return std::fmod(value, static_cast<double>(num));
+    }
     inline double Clamp(double value, double min, double max) noexcept {
-        if (value < min) {return min;} else if (value > max) {return max;} return value;}
-    inline double Sin(double value) noexcept {return std::sin(value);}
-    inline double Cos(double value) noexcept {return std::cos(value);}
-    inline double Tan(double value) noexcept {return std::tan(value);}
+        if (value < min) {return min;} else if (value > max) {return max;} return value;
+    }
+    inline double Sin(double value) noexcept {
+        return std::sin(value);
+    }
+    inline double Cos(double value) noexcept {
+        return std::cos(value);
+    }
+    inline double Tan(double value) noexcept {
+        return std::tan(value);
+    }
+    
     template<typename... Args>
     auto Max(Args... args) noexcept{return std::max({args...});}
     template<typename... Args>

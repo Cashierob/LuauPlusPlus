@@ -157,7 +157,9 @@ namespace LuauSystem {
         inline Detail::InstanceHandle Parent() {
             if(!std::filesystem::exists(path)) {return {false,{}};}
             if(!std::filesystem::exists(path.parent_path())) {return {false,{}};}
-            return {true, path.parent_path()};
+            return {
+                true, path.parent_path()
+            };
         }
     };
 }

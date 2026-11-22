@@ -60,7 +60,9 @@ namespace Luau {
         }
     }
 
-    inline bool SetAsync(const std::string& DataStoreName, const auto& str) {
+
+    template <typename T>
+    inline bool SetAsync(const std::string& DataStoreName, const T& str) {
         try {
             std::filesystem::path dir = Location + DataStoreName;
             if (std::filesystem::exists(dir) && std::filesystem::is_regular_file(dir)) {

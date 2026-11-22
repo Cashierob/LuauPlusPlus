@@ -46,11 +46,58 @@
 
 
 namespace Luau {
+
+    typedef std::variant<std::string, int, double, bool, std::filesystem::path, float> local;
+
+    std::variant<std::string, int, double, bool, std::filesystem::path, float> L(const std::string& value) {
+        return value;
+    }
+
+    template <typename T>
+    inline std::variant<std::string, int, double, bool, std::filesystem::path, float> L(const T& value) {
+        if constexpr (std::is_same_v<T, int>) {
+            return value;
+        } else if constexpr (std::is_same_v<T, double>) {
+            return value;
+        } else if constexpr (std::is_same_v<T, bool>) {
+            return value;
+        } else if constexpr (std::is_same_v<T, std::filesystem::path>) {
+            return value;
+        } else if constexpr (std::is_same_v<T, float>) {
+            return value;
+        } else {
+            return std::string{};
+        }
+    }
+
+    inline std::string L(const std::variant<std::string, int, double, bool, std::filesystem::path, float>& value) {
+        return std::visit([](const auto& v) -> std::string {
+            using T = std::decay_t<decltype(v)>;
+            if constexpr (std::is_same_v<T, std::string>)
+                return v;
+            else if constexpr (std::is_same_v<T, int>)
+                return std::to_string(v);
+            else if constexpr (std::is_same_v<T, double>)
+                return std::to_string(v);
+            else if constexpr (std::is_same_v<T, bool>)
+                return v ? "true" : "false";
+            else if constexpr (std::is_same_v<T, std::filesystem::path>)
+                return v.string();
+            else if constexpr (std::is_same_v<T, float>)
+                return std::to_string(v);
+            else
+                return "";
+        }, value);
+    }
+
+    
+
 //--------------------------//
 //     Basic Functions      //
 //--------------------------//
-template<typename T>
-inline void Print(const T& message) {
+template<typename Print>
+
+inline void Print(const Print& message) {
     try {std::cout << message << std::endl;} catch (...) {std::cout << "Printing Error." << std::endl;}
 }
 
@@ -65,9 +112,9 @@ inline void Print(const std::variant<Types...>& message) {
 
 inline void SystemWait() {std::cin.get();}
 
-template<typename T>
+template<typename Typeof>
 
-inline std::string Typeof(const T& input) noexcept {
+inline std::string Typeof(const Typeof& input) noexcept {
     if constexpr (std::is_same_v<std::decay_t<decltype(input)>, bool>) {return "bool";}
     else if constexpr (std::is_integral_v<std::decay_t<decltype(input)>>) {return "int";} 
     else if constexpr (std::is_floating_point_v<std::decay_t<decltype(input)>>) {return "double";} 
@@ -83,7 +130,7 @@ namespace Read {
         std::string input;
         std::getline(std::cin,input);
         while(LuauSystem::Detail::isNumber(input)) {
-            std::cout << "Must be a string." << std::endl;
+            Luau::Print("Must be a string.");
             std::getline(std::cin,input);
         }
         return input;
@@ -127,8 +174,8 @@ namespace String {
         return std::string{};
     }
 
-    template<typename T>
-    inline std::string Tostring(const T& Value) {
+    template<typename B>
+    inline std::string Tostring(const B& Value) {
         try {return to_string(Value);} catch (...) {return "";}
     }
 };
@@ -183,7 +230,7 @@ namespace Math {
     inline double Tan(double value) noexcept {
         return std::tan(value);
     }
-    
+
     template<typename... Args>
     auto Max(Args... args) noexcept{return std::max({args...});}
     template<typename... Args>
